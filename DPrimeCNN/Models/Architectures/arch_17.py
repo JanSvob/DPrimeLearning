@@ -1,0 +1,57 @@
+'''
+Simple CNN architecture consisting of 4 convolutional layers 
+followed by max-pooling, dense layer and softmax classifier.
+
+networkCfg['inputDepth'] - input depth dimension (3rd dimension)
+networkCfg['inputWidth'] - input input
+networkCfg['inputHeight'] - input height
+networkCfg['numOutputs'] - number of network outputs
+
+'''
+
+from __future__ import print_function
+import lasagne
+import lasagne.layers.dnn
+
+
+def getArchitecture(networkCfg):
+    # Input layer
+    l_in = lasagne.layers.InputLayer(shape=(None,
+                                            networkCfg['inputDepth'], networkCfg['inputWidth'],
+                                            networkCfg['inputHeight']))
+
+    l_norm = lasagne.layers.LocalResponseNormalization2DLayer(l_in)
+
+    l_conv2d1 = lasagne.layers.dnn.Conv2DDNNLayer(
+        l_norm, num_filters=32, filter_size=(9, 9),
+        stride=(2, 2),
+        nonlinearity=lasagne.nonlinearities.rectify,
+        W=lasagne.init.GlorotUniform())
+    l_bn1 = lasagne.layers.batch_norm(l_conv2d1)
+
+    l_conv2d2 = lasagne.layers.dnn.Conv2DDNNLayer(
+        l_bn1, num_filters=64, filter_size=(7, 7),
+        nonlinearity=lasagne.nonlinearities.rectify)
+    l_mp2 = lasagne.layers.Pool2DLayer(l_conv2d2, pool_size=(2, 2),
+                                       mode='max')
+
+    l_conv2d3 = lasagne.layers.dnn.Conv2DDNNLayer(
+        l_mp2, num_filters=96, filter_size=(5, 5),
+        nonlinearity=lasagne.nonlinearities.ScaledTanH(scale_in=0.5, scale_out=2.27))
+    l_conv2d4 = lasagne.layers.dnn.Conv2DDNNLayer(
+        l_conv2d3, num_filters=128, filter_size=(3, 3),
+        nonlinearity=lasagne.nonlinearities.ScaledTanH(scale_in=0.5, scale_out=2.27))
+
+    # A fully-connected layer of numOutputs units with 50% dropout
+    l_fc1 = lasagne.layers.DenseLayer(
+        lasagne.layers.dropout(l_conv2d4, 0.3),
+        num_units=256,
+        nonlinearity=lasagne.nonlinearities.identity)  # rectify)#identity)
+
+    network = lasagne.layers.DenseLayer(
+        l_fc1,
+        num_units=networkCfg['numOutputs'],
+        nonlinearity=lasagne.nonlinearities.identity)
+
+    return network, {'input': l_in, 'conv1': l_conv2d1, 'conv2': l_conv2d2, 'conv3': l_conv2d3, 'conv4': l_conv2d4,
+                     'fc1': l_fc1}
