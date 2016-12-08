@@ -5,11 +5,6 @@ This repository contains Python framework for palmprint recognition using Convol
 * learning binary classifier comparing couples of images
 * dataset processing and result evaluation
 
-## Contributors ##
-**Jan Svoboda**
-**Jonathan Masci**
-**Michael Bronstein**
-
 ## Dependencies ##
 [Lasagne](http://lasagne.readthedocs.org/en/latest/) - CNN implementation (layers, objectives, ...)
 
