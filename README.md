@@ -16,6 +16,15 @@ This repository contains Python framework for palmprint recognition using Convol
 
 [Bob](http://idiap.github.io/bob/) - biometrics (evaluation)
 
+## Sample models ##
+IITD model - trianed on the 1st half of the IITD dataset - leaves 2nd half for testing
+
+Casia model - trained on the 1st half of the Casia dataset - leaves the 2nd half for testing
+
+The two pre-trained models can be downloaded from here:
+
+https://www.dropbox.com/s/gzv2heo9n43llfg/models.zip?dl=0
+
 ## Used datasets ##
 Casia touchless palmprint database (2D) ([Info](http://biometrics.idealtest.org/dbDetailForUser.do?id=5))
 
