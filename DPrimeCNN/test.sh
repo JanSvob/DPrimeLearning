@@ -1,13 +1,13 @@
 # Name of the model that is being tested
-modelName="/media/nas/palmprints_cnn/arch_17_8_siam_c"
+modelName="folder_with_my_model_file"
 # Path to the CNN architecture that is being used in the model
 archName="Models/Architectures/arch_17"
 # Output directory to save the test results into
-outputDir="arch_17_8_c"
+outputDir="test_output"
 # Which GPU should be used
 gpu="gpu2"
 # Name of the dataset to evaluate
-dataset="Casia"
+dataset="IITD"
 # Normalize the input samples before passing to the CNN
 normalize="--no-norm_input"
 # Output feature vector size
@@ -21,9 +21,9 @@ cropSize="8"
 # Training epoch from which to take the model parameters
 epoch="400"
 # Dataset train/test splitting parameters
-splitMod="6"        # label % splitMod
-splitTrain="1,4,5"      # label % splitMod in splitTrain (can contain more values -> 0,1,2)
-splitTest="0,2,3"       # label % splitMod in splitTest (can contain more values -> 3,4,5)
+splitMod="2"        # label % splitMod
+splitTrain="1"      # label % splitMod in splitTrain (can contain more values -> 0,1,2)
+splitTest="0"       # label % splitMod in splitTest (can contain more values -> 3,4,5)
 
 
 # Run the Python test script with the preset parameters
